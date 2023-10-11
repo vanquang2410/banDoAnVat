@@ -39,9 +39,10 @@ export default class AuthController {
         }     
     }
 
-    
+
     logout= async(req,res,next)=>{
         try {
+            // console.log(req.headers.authorization.split(' ')[1]);
             // console.log(req.headers.authorization.split(' ')[1]);
              var logout= await this.service.logout(req.headers.authorization.split(' ')[1])
             // res.cookie('blacklist_Token',logout.blacklist_token)

@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/handle.error.js"
 
 import cookieParser from "cookie-parser"
 import authRouter from "./routers/auth.router.js"
+import ProductRouter from "./routers/product.router.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -30,6 +31,8 @@ app.use(cookieParser())
 app.use(express.json())
 
 app.use("/api/auth",authRouter)
+
+app.use('/api/product',ProductRouter)
 
 app.use(errorHandler)
 

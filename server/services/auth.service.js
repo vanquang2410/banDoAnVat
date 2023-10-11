@@ -56,7 +56,6 @@ export default class authService {
             if (userExist) throw new Error("Email has already been registereds");
             else {
               const user = await this.model.create({ email, password, name });
-            //   console.log(user);
               resolve({ complete: true });
             }
     
@@ -89,7 +88,7 @@ export default class authService {
  
                 
                 let token = this.generateToken(account._id);
-                 console.log(token);
+                //  console.log(token);
                 let refreshToken = this.generateRefreshToken(account._id,token)
                 resolve({
                   refreshToken:refreshToken,
@@ -109,6 +108,7 @@ export default class authService {
         return new Promise(async(resolve, reject) => {
           try {
             global.blackListToken.push(accessToken)
+            console.log(accessToken);
             console.log(global.blackListToken);
             if(!accessToken)throw new Error('token sai ')
             resolve({logout :'success'})
