@@ -5,22 +5,33 @@ import path from "path"
 import { fileURLToPath } from 'url'
 import ConnentDB from "./utils/mongoose.init.js"
 import { errorHandler } from "./middlewares/handle.error.js"
+
+import cookieParser from "cookie-parser"
+import authRouter from "./routers/auth.router.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
 
 
+
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 4000
+
+
+
+
+env.config()
+
 
 
 app.use(cookieParser())
 
 app.use(express.json())
 
+app.use("/api/auth",authRouter)
 
-
+app.use(errorHandler)
 
 ConnentDB().then((data) => {
     app.listen(PORT,() => {
