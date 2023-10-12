@@ -24,14 +24,17 @@ export default class productService{
     addProduct = (name, price,image,discount)=>{
         return new Promise(async(resolve, reject) => {
             try {
-                if(!name||!price||image)throw new Error('you need more information ')
+                // console.log(name,price,image,discount);
+                if(!name||!price||!image||!discount){
+                    throw new Error('you need more information ')
+                }
                 let addProduct = await this.model.create({
                       name :name, 
                       price:price, 
                       image:image,
                       discount:discount
                 })
-                resolve({add_product:"success"})
+                resolve({addProduct:'success'})
             } catch (error) {
                 reject(error)
             }
@@ -43,7 +46,7 @@ export default class productService{
     updateProduct =(name, price,image,discount,id)=>{
         return new Promise(async(resolve, reject) => {
             try {
-                if (!name||!price||image||discount){
+                if (!name||!price||!image||!discount){
                     throw new Error('you need more information ')
                 }
                 let updateProduct= await this.model.updateOne({_id:new mongoose.Types.ObjectId(id)},{

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import model from '../models/product.model.js'
+import model from '../models/user.model.js'
 
 export default class Authen{
     generateToken = (id) => {
@@ -12,15 +12,14 @@ export default class Authen{
     
     verifyTokenTokenAdmin =async(req,res,next)=>{
         try {
-            // var token = req.headers.authorization.split(' ')[1]
-            // console.log(token);
-            console.log(global.blackListToken.includes(accessToken));
+             var token = req.headers.authorization.split(' ')[1]
+            
             if(token){
              let data=jwt.verify(token,'taotoken') 
-             
+  
              if(!data)throw new Error('token is not valid')
-             var user=await model.findOne({_id:data.id})
 
+             var user=await model.findOne({_id:data.id})
              if(user.role!=='admin'){
                  throw new Error('this account is not admin')
              }
@@ -49,16 +48,16 @@ export default class Authen{
         try {
              var accessToken =req.headers.authorization.split(' ')[1]
             // console.log(req.headers.authorization.split(' '));
-            if(global.blackListToken.includes(accessToken)){
-                throw new Error( "TOken invalid")
-            }
+            // if(global.blackListToken.includes(accessToken)){
+            //     throw new Error( "TOken invalid")
+            // }
             
             if(accessToken){
              let data=jwt.verify(accessToken,process.env.TOKEN_SECRET) 
           
              if(!data)throw new Error('token is not valid')
              var user=await model.findOne({_id:data.id})
-             if(!user.active)throw new Error('this account is not active')
+            //  if(!user.active)throw new Error('this account is not active')
              req.user=user;
              console.log(user);
              next()
