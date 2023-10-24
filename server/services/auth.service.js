@@ -68,14 +68,14 @@ export default class authService {
       login = ({ email, password }) => {
         return new Promise(async (resolve, reject) => {
           try {
-            // console.log(process.env.TIME_TOKEN);
+            
             if(!this.validateEmail(email))throw new Error('wrong email format')
             if(!this.validatePassword(password)) throw new Error('Password must have at least 6 characters including letters and numbers ')
             if (!email || !password)
               throw new Error("Please fill in all required fields");
             let account = await this.model.findOne({ email });
 
-            // console.log(account);
+           
             if (!account) {
               throw new Error("your email is not exist");
             } else {
@@ -88,7 +88,7 @@ export default class authService {
  
                 
                 let token = this.generateToken(account._id);
-                //  console.log(token);
+                // 
                 let refreshToken = this.generateRefreshToken(account._id,token)
                 resolve({
                   refreshToken:refreshToken,
@@ -108,8 +108,7 @@ export default class authService {
         return new Promise(async(resolve, reject) => {
           try {
             global.blackListToken.push(accessToken)
-            console.log(accessToken);
-            console.log(global.blackListToken);
+            
             if(!accessToken)throw new Error('token sai ')
             resolve({logout :'success'})
           } catch (error) {
@@ -124,8 +123,8 @@ export default class authService {
             
             if(!oldtoken||!oldReFreshToken)throw new Error('token is invalid')
             // var checkToken = jwt.verify(oldtoken.token,'taotoken')
-          // console.log();
-          console.log(global.blackListToken);
+     
+          
           if (global.blackListToken.includes(oldtoken))throw new Error('ban da dang xuat')
             var checkReFreshToken =jwt.verify(oldReFreshToken,process.env.REFRESH_TOKEN_SECRET)
             if(!checkReFreshToken)throw new Error('you must login back')
@@ -145,7 +144,7 @@ export default class authService {
       updatePassword=({email,oldPassword,newPassword})=>{
         return new Promise( async(resolve, reject) => {
           try {
-            console.log(email,oldPassword,newPassword);
+    
             if (!email || !oldPassword || !newPassword)
             throw new Error("Please fill in all required fields");
             if (newPassword.length < 6)

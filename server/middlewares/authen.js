@@ -59,7 +59,7 @@ export default class Authen{
              var user=await model.findOne({_id:data.id})
             //  if(!user.active)throw new Error('this account is not active')
              req.user=user;
-             console.log(user);
+          
              next()
             }
             else throw new Error('you are not authenticated')

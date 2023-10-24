@@ -7,20 +7,14 @@ const orderSchema=Schema({
         type:Schema.Types.ObjectId,
         ref:'user-food-app'
     },
-    product:[
+    cart_id:[
         {
-           product_id:{
             type:Schema.Types.ObjectId,
-            ref:"product-food-app"
-           }, 
-           quantity:{
-            type:Number
-           }
+            ref:'cart-food-app'
         }
-    ], 
-    total_price:{
-        type:Number
-    }, 
+    ]
+   , 
+     
     shipping_address:{
         type:String, 
         require:true
@@ -33,3 +27,4 @@ const orderSchema=Schema({
 },{
     timestamps: true,
 })
+export default model("order-food-app",orderSchema)

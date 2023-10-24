@@ -5,20 +5,17 @@ const cartSchema = Schema({
         type:String, 
         ref:'user-food-app'
     }, 
-    product:[
-        {
-           product_id:{
-            type:Schema.Types.ObjectId,
-            ref:"product-food-app"
-           }, 
-           quantity:{
-            type:Number
-           }
-        }
-    ], 
+    product_id:
+       {
+        type:Schema.Types.ObjectId,
+        ref:"product-food-app"
+       }
+    , 
     quantity:{
-        type:Number
-    },
+        type:Number,
+        require:true
+    }
+    ,
     total_price:{
         type:Number
     }, 
@@ -26,3 +23,4 @@ const cartSchema = Schema({
 {
     timestamps: true,
 })
+export default model("cart-food-app",cartSchema)
