@@ -5,12 +5,12 @@ import path from "path"
 import { fileURLToPath } from 'url'
 import ConnentDB from "./utils/mongoose.init.js"
 import { errorHandler } from "./middlewares/handle.error.js"
-
 import cookieParser from "cookie-parser"
 import authRouter from "./routers/auth.router.js"
 import ProductRouter from "./routers/product.router.js"
 import cartRouter from "./routers/cart.router.js"
 import orderRouter from "./routers/order.router.js"
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -32,6 +32,10 @@ app.use(cookieParser())
 
 app.use(express.json())
 
+app.use(cors({
+    origin:"*"
+}))
+
 app.use("/api/auth",authRouter)
 
 app.use('/api/product',ProductRouter)
@@ -41,6 +45,7 @@ app.use('/api/carts',cartRouter)
 app.use('/api/orders',orderRouter)
 
 app.use(errorHandler)
+
 
 ConnentDB().then((data) => {
     app.listen(PORT,() => {
