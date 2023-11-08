@@ -1,5 +1,6 @@
 import modelOrders from '../models/order.model.js'
 import modelProduct from '../models/product.model.js'
+import modelCart from '../models/cart.model.js'
 import mongoose from "mongoose";
 export default class OrderService {
     constructor(){
@@ -12,7 +13,7 @@ export default class OrderService {
         return new Promise(async(resolve, reject) => {
             try {
                 if (!id)throw new Error('you must have id')
-                var order =  await this.modelOrders.find({user_id:new mongoose.Types.ObjectId(id)})
+                var order =  await this.modelOrders.find({user_id:new mongoose.Types.ObjectId(id)}).populate('user_id product.product_id')
                 resolve(order)
             } catch (error) {
                 reject(error)
@@ -21,24 +22,20 @@ export default class OrderService {
         })
        
     }
-   async addOrders (idUser , idCart ,address){
+   async addOrders (idUser , product ,address){
        try {
-        
-        const convertIdCart= JSON.stringify(idCart)
-        let convertStringToArray=[]
-       JSON.parse(convertIdCart).forEach(element => {
-        convertStringToArray.push(new mongoose.Types.ObjectId(element))
-       });
-        console.log(convertStringToArray);
+        if(!product) throw new Error('cart is empty')
           var addOrders= await this.modelOrders.create({
             user_id:idUser,
-            cart_id:convertStringToArray,
+            product:product,
             shipping_address:address,
+            time:Date.now(),
             status:'waiting'
           })
-          
+          var removeCart= await modelCart.deleteMany({user_id:idUser})
           return {addOrders:"success"}
        } catch (error) {
+        console.log(error);
         throw error
        }
     }

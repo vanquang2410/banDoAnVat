@@ -17,8 +17,6 @@ export default class AuthController {
     login= async(req,res,next)=>{
         try {
             var token = await this.service.login(req.body)
-            // res.cookie('accessToken',token.Accesstoken)
-            // res.cookie('refreshToken',token.refreshToken)
             res.json(token)
             
         } catch (error) {

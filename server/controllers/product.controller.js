@@ -21,6 +21,7 @@ export default class ProductController{
         } catch (error) {
             res.status(400)
             next(error)
+            console.log(error);
         }
     }
     updateProduct= async(req,res,next)=>{

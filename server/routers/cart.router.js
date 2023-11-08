@@ -9,5 +9,5 @@ const cartRouter= Router()
  cartRouter.get('/',verifyToken,getCart)
  cartRouter.post('/',verifyToken,addCart)
 cartRouter.put('/',verifyToken,updateCart)
-cartRouter.delete('/',verifyToken,deleteCart)
+cartRouter.delete('/:idCart',verifyToken,deleteCart)
  export default cartRouter

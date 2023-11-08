@@ -8,7 +8,7 @@ const {getOrder,addOrder,deleteOrder} = new OrderController()
 const orderRouter = Router()
 orderRouter.get('/',verifyToken,getOrder)
 orderRouter.post('/',verifyToken,addOrder)
-orderRouter.delete('/',verifyToken,deleteOrder)
+orderRouter.delete('/:idOrder',verifyToken,deleteOrder)
 
 
 export default orderRouter

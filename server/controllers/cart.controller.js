@@ -6,6 +6,7 @@ export default class CartController{
     }
     getCart =async(req,res,next)=>{
        try {
+        console.log(req.user._id);
         const getCart = await this.service.getCart(req.user._id)
         res.json(getCart)
        } catch (error) {
@@ -35,7 +36,7 @@ export default class CartController{
     }
     deleteCart = async(req,res,next)=>{
         try {
-            const deleteCart= await this.service.deleteCart(req.body.idCart)
+            const deleteCart= await this.service.deleteCart(req.params.idCart)
             res.json(deleteCart)
         } catch (error) {
             res.status(400)

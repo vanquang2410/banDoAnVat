@@ -16,7 +16,7 @@ export default class OrderController {
 
     addOrder=async(req,res,next)=>{
         try {
-            const addOrder= await this.service.addOrders(req.user._id,req.body.idCart,req.body.address)
+            const addOrder= await this.service.addOrders(req.user._id,req.body.product,req.body.address)
             res.json(addOrder)
         } catch (error) {
             res.status(400)
@@ -26,7 +26,7 @@ export default class OrderController {
 
     deleteOrder= async(req,res,next)=>{
         try {
-            const deleteOrder= await this.service.deleteOrders(req.body.idOrder)
+            const deleteOrder= await this.service.deleteOrders(req.params.idOrder)
             res.json(deleteOrder)
         } catch (error) {
             res.status(400)

@@ -24,7 +24,7 @@ export default class productService{
     addProduct = (name, price,image,discount)=>{
         return new Promise(async(resolve, reject) => {
             try {
-                // console.log(name,price,image,discount);
+                
                 if(!name||!price||!image||!discount){
                     throw new Error('you need more information ')
                 }
@@ -37,6 +37,7 @@ export default class productService{
                 resolve({addProduct:'success'})
             } catch (error) {
                 reject(error)
+               
             }
         })
     }

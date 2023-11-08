@@ -7,20 +7,30 @@ const orderSchema=Schema({
         type:Schema.Types.ObjectId,
         ref:'user-food-app'
     },
-    cart_id:[
+    product :[
         {
-            type:Schema.Types.ObjectId,
-            ref:'cart-food-app'
+            product_id:
+            {
+             type:Schema.Types.ObjectId,
+             ref:"product-food-app"
+            },
+            quantity:{
+                type:Number,
+                require:true
+            }
+         , 
         }
-    ]
-   , 
-     
+    ],
     shipping_address:{
         type:String, 
         require:true
     }, 
     status:{
         type:String, 
+        require:true
+    },
+    time:{
+        type:Date,
         require:true
     }
 

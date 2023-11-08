@@ -10,7 +10,7 @@ export default class CartService{
         return new Promise(async(resolve, reject) => {
             try {
                 if(!id)throw new Error('you must have id')
-                var cart = await this.model.find({user_id:id}).select('-_id')
+                var cart = await this.model.find({user_id:id}).populate('product_id')
                 resolve(cart)
             } catch (error) {
                 reject(error)
@@ -23,7 +23,7 @@ export default class CartService{
                 if (!productId||!quantity)throw new Error('you need more information')
                 const check = await this.modelProduct.findOne({_id:productId})
                 if (!check)throw new Error ("This product is not in our store ")
-                const productInCheck = await this.model.findOne({product_id:productId})
+                const productInCheck = await this.model.findOne({product_id:productId,user_id:idUser})
                 if(productInCheck) throw new Error('you have added this product in cart')
                 const priceOfProduct = check.price
                 const addCart = this.model.create({
@@ -60,6 +60,7 @@ export default class CartService{
             try {
                 
                 if(!idCart)throw new Error('you need more information')
+                console.log(idCart);
                 const checkIdCart = await  this.model.findOne({_id:new mongoose.Types.ObjectId(idCart)})
                if(!checkIdCart)throw new Error('this cart is not invalid')
                 const check = await this.model.deleteOne({_id:idCart}) 

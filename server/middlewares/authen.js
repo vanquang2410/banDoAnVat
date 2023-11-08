@@ -47,19 +47,11 @@ export default class Authen{
     verifyToken =async (req,res,next) => {
         try {
              var accessToken =req.headers.authorization.split(' ')[1]
-            // console.log(req.headers.authorization.split(' '));
-            // if(global.blackListToken.includes(accessToken)){
-            //     throw new Error( "TOken invalid")
-            // }
-            
             if(accessToken){
              let data=jwt.verify(accessToken,process.env.TOKEN_SECRET) 
-          
              if(!data)throw new Error('token is not valid')
              var user=await model.findOne({_id:data.id})
-            //  if(!user.active)throw new Error('this account is not active')
              req.user=user;
-          
              next()
             }
             else throw new Error('you are not authenticated')

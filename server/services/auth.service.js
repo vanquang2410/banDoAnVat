@@ -68,14 +68,11 @@ export default class authService {
       login = ({ email, password }) => {
         return new Promise(async (resolve, reject) => {
           try {
-            
             if(!this.validateEmail(email))throw new Error('wrong email format')
             if(!this.validatePassword(password)) throw new Error('Password must have at least 6 characters including letters and numbers ')
             if (!email || !password)
               throw new Error("Please fill in all required fields");
             let account = await this.model.findOne({ email });
-
-           
             if (!account) {
               throw new Error("your email is not exist");
             } else {
@@ -85,8 +82,6 @@ export default class authService {
               );
               if (!correct) throw new Error("password is wrong");
               else {
- 
-                
                 let token = this.generateToken(account._id);
                 // 
                 let refreshToken = this.generateRefreshToken(account._id,token)
@@ -95,7 +90,6 @@ export default class authService {
                   Accesstoken:`${token}`,
                   _id:`${account._id}`
                 });
-    
               }
             }
           } catch (error) {
